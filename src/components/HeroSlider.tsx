@@ -132,6 +132,10 @@ const slides: Slide[] = [
 const HeroSlider: React.FC = () => {
   const [current, setCurrent] = useState<number>(0);
   const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+  const minSwipeDistance = 50;
 
   const goTo = useCallback(
     (index: number) => {
@@ -158,8 +162,36 @@ const HeroSlider: React.FC = () => {
     return () => clearInterval(timer);
   }, [next]);
 
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEndHandler = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    
+    if (isLeftSwipe) {
+      next();
+    } else if (isRightSwipe) {
+      prev();
+    }
+  };
+
   return (
-    <section className="hero-slider hero-slider--services" aria-label="Hero Slideshow">
+    <section 
+      className="hero-slider hero-slider--services" 
+      aria-label="Hero Slideshow"
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEndHandler}
+    >
       
       {/* Sliding Track */}
       <div 

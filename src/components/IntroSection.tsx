@@ -84,8 +84,8 @@ const IntroSection: React.FC = () => {
 
             {/* Floating Experience Badge */}
             <div className="absolute top-1/2 left-[75%] transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl p-6 shadow-xl z-20 flex items-center gap-4">
-              <div className="text-4xl font-black text-[#1C7C9C]">10+</div>
-              <div className="text-sm font-bold text-slate-500 leading-tight uppercase tracking-wide">Years of<br/>Expertise</div>
+              <div className="text-4xl font-black text-[#1C7C9C]">40+</div>
+              <div className="text-sm font-bold text-slate-500 leading-tight uppercase tracking-wide">Years Cumulative<br/>Experience</div>
             </div>
           </div>
 

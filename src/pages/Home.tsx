@@ -5,7 +5,6 @@ import WorkflowSection from '../components/WorkflowSection';
 import ResearchAreas from '../components/ResearchAreas';
 import SectorsSection from '../components/SectorsSection';
 import FooterHome from '../components/FooterHome';
-import ChatBot from '../components/ChatBot';
 
 const Home: React.FC = () => {
   return (
@@ -30,8 +29,6 @@ const Home: React.FC = () => {
       {/* Component 4: Footer */}
       <FooterHome />
 
-      {/* Floating: Chatbot + Contact Button */}
-      <ChatBot />
     </>
   );
 };

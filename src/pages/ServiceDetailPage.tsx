@@ -61,7 +61,7 @@ const ServiceDetailPage = () => {
         {/* Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-navy via-primary to-secondary" />
         {service.imgUrl && (
-          <div 
+          <div
             className="absolute inset-0 bg-cover bg-center pointer-events-none opacity-70"
             style={{ backgroundImage: `url(${service.imgUrl})` }}
           />
@@ -123,26 +123,7 @@ const ServiceDetailPage = () => {
                 {service.heroTagline}
               </motion.p>
 
-              {/* CTA */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={heroInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                className="flex flex-col sm:flex-row gap-3"
-              >
-                <a
-                  href="#"
-                  className="inline-flex items-center justify-center gap-2 bg-white text-primary font-bold px-7 py-3.5 rounded-xl hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 text-sm"
-                >
-                  Get Started <ArrowUpRight className="w-4 h-4" />
-                </a>
-                <Link
-                  to="/services"
-                  className="inline-flex items-center justify-center gap-2 border border-white/20 text-white font-semibold px-7 py-3.5 rounded-xl hover:bg-white/10 transition-all duration-300 text-sm"
-                >
-                  <ArrowLeft className="w-4 h-4" /> All Services
-                </Link>
-              </motion.div>
+              {/* CTA Removed per request */}
             </div>
 
             {/* Right: Stats Grid */}
@@ -412,17 +393,11 @@ const ServiceDetailPage = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <a
-                href="#"
+                href="#footer"
                 className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-secondary text-white font-bold px-8 py-3.5 rounded-xl hover:shadow-xl hover:shadow-primary/20 transition-all duration-300 hover:-translate-y-0.5 text-sm"
               >
                 Contact Us <ArrowUpRight className="w-4 h-4" />
               </a>
-              <Link
-                to="/services"
-                className="inline-flex items-center justify-center gap-2 border border-slate-200 text-primary font-semibold px-8 py-3.5 rounded-xl hover:bg-slate-50 transition-all duration-300 text-sm"
-              >
-                <ArrowLeft className="w-4 h-4" /> Browse All Services
-              </Link>
             </div>
           </div>
         </motion.div>

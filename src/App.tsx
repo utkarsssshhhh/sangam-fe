@@ -5,8 +5,10 @@ import ServicesPage from './pages/ServicesPage';
 import ServiceDetailPage from './pages/ServiceDetailPage';
 import ProductsPage from './pages/ProductsPage';
 import AboutUs from './pages/AboutUs';
+import Treatment from './pages/Treatment';
 
 import Navbar from './components/Navbar';
+import ChatBot from './components/ChatBot';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -28,8 +30,10 @@ function App() {
         <Route path="/about" element={<AboutUs />} />
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/services/:slug" element={<ServiceDetailPage />} />
+        <Route path="/treatment" element={<Treatment />} />
         <Route path="/products" element={<ProductsPage />} />
       </Routes>
+      <ChatBot />
     </>
   );
 }

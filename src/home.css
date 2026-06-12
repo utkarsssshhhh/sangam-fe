@@ -319,6 +319,10 @@
   .hero-actions {
     flex-direction: column;
   }
+
+  .hero-edge-arrows {
+    display: none;
+  }
 }
 
 /* ===== Intro Section Component ===== */

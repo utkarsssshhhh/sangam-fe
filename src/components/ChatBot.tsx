@@ -33,6 +33,9 @@ interface ChatMessage {
 const ChatBot: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isContactOpen, setIsContactOpen] = useState<boolean>(false);
+  const [email, setEmail] = useState('');
+  const [query, setQuery] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
     { id: 1, from: 'bot', text: BOT_RESPONSES.default, time: new Date() },
   ]);
@@ -44,10 +47,28 @@ const ChatBot: React.FC = () => {
     endRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isTyping]);
 
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsContactOpen(false);
-    alert("Thank you! Your query has been submitted.");
+    setIsSubmitting(true);
+    try {
+      const res = await fetch("http://localhost:3001/api/v1/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, query }),
+      });
+      if (res.ok) {
+        setIsContactOpen(false);
+        setEmail('');
+        setQuery('');
+        alert("Thank you! Your query has been submitted.");
+      } else {
+        alert("Something went wrong. Please try again.");
+      }
+    } catch {
+      alert("Could not connect to server. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const send = () => {
@@ -234,6 +255,8 @@ const ChatBot: React.FC = () => {
                     type="email" 
                     id="email" 
                     required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     placeholder="you@gmail.com" 
                     className="w-full px-5 py-3.5 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#3DA5C4] focus:border-transparent transition-all text-slate-800 font-medium placeholder:text-slate-400"
                   />
@@ -246,15 +269,18 @@ const ChatBot: React.FC = () => {
                     id="query" 
                     required
                     rows={4}
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
                     placeholder="How can we help you?" 
                     className="w-full px-5 py-3.5 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#3DA5C4] focus:border-transparent transition-all resize-none text-slate-800 font-medium placeholder:text-slate-400"
                   />
                 </div>
                 <button 
                   type="submit" 
-                  className="w-full bg-[#3DA5C4] hover:bg-[#1C7C9C] text-white font-extrabold py-4 rounded-xl transition-colors mt-2 shadow-lg shadow-[#3DA5C4]/20 text-lg"
+                  disabled={isSubmitting}
+                  className="w-full bg-[#3DA5C4] hover:bg-[#1C7C9C] text-white font-extrabold py-4 rounded-xl transition-colors mt-2 shadow-lg shadow-[#3DA5C4]/20 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Submit Query
+                  {isSubmitting ? 'Submitting...' : 'Submit Query'}
                 </button>
               </form>
             </motion.div>

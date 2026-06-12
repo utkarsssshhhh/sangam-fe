@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Droplets, Mail, Phone, MapPin, ArrowUpRight, ExternalLink } from 'lucide-react';
+import { Mail, Phone, ArrowUpRight, ExternalLink } from 'lucide-react';
 
 const FooterHome: React.FC = () => {
   const year = new Date().getFullYear();

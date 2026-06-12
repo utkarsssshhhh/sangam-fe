@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { ArrowRight, Droplets, Wind, Sprout, Activity, Waves, CloudRain } from 'lucide-react';
 
 interface ResearchArea {
@@ -76,8 +77,17 @@ const researchAreas: ResearchArea[] = [
 ];
 
 const ResearchAreas: React.FC = () => {
+  const location = useLocation();
   const [activeTab, setActiveTab] = useState<string>('water');
   const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const tab = params.get('tab');
+    if (tab && researchAreas.some(a => a.id === tab)) {
+      setActiveTab(tab);
+    }
+  }, [location.search]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(

@@ -1,11 +1,24 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Droplets, Mail, Phone, MapPin, ArrowUpRight, ExternalLink } from 'lucide-react';
 
 const FooterHome: React.FC = () => {
   const year = new Date().getFullYear();
 
-  const quickLinks = ['Home', 'About Us', 'Research', 'Products', 'Careers'];
-  const researchLinks = ['Water Quality', 'Air Monitoring', 'Soil Sensing', 'Hydrological Modeling', 'Climate Data', 'Biomonitoring'];
+  const quickLinks = [
+    { label: 'Home', path: '/' },
+    { label: 'About Us', path: '/about' },
+    { label: 'Products', path: '/products' },
+    { label: 'Treatments', path: '/treatment' }
+  ];
+  const researchLinks = [
+    { label: 'Water Quality', id: 'water' },
+    { label: 'Air Monitoring', id: 'air' },
+    { label: 'Soil Sensing', id: 'soil' },
+    { label: 'Hydrological Modeling', id: 'hydrology' },
+    { label: 'Climate Data', id: 'climate' },
+    { label: 'Biomonitoring', id: 'biomonitoring' }
+  ];
 
   return (
     <footer id="footer" className="footer-home" aria-label="Site Footer">
@@ -22,10 +35,9 @@ const FooterHome: React.FC = () => {
           {/* Brand */}
           <div className="footer-home__brand">
             <div className="footer-home__logo">
-              <div className="footer-home__logo-icon">
-                <Droplets size={20} />
-              </div>
-              <span>Pravayan</span>
+              <Link to="/">
+                <img src="/LogoHead.jpeg" alt="Pravayan Logo" className="h-10 w-auto object-contain rounded-md" />
+              </Link>
             </div>
             <p className="footer-home__brand-desc">
               Sensing the pulse of the planet. Pravayan pioneers environmental intelligence through precision IoT sensor networks — empowering communities with real-time data for a sustainable future.
@@ -41,22 +53,17 @@ const FooterHome: React.FC = () => {
           <div className="footer-home__col">
             <h4 className="footer-home__col-title">Quick Links</h4>
             <ul className="footer-home__link-list">
-              {quickLinks.map((link) => {
-                const isProducts = link === 'Products';
-                return (
-                  <li key={link}>
-                    <a
-                      href={isProducts ? "/products" : "#"}
-                      target={isProducts ? "_blank" : undefined}
-                      rel={isProducts ? "noopener noreferrer" : undefined}
-                      className="footer-home__link"
-                    >
-                      <ArrowUpRight size={13} className="footer-home__link-icon" />
-                      {link}
-                    </a>
-                  </li>
-                );
-              })}
+              {quickLinks.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    to={link.path}
+                    className="footer-home__link"
+                  >
+                    <ArrowUpRight size={13} className="footer-home__link-icon" />
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -65,11 +72,11 @@ const FooterHome: React.FC = () => {
             <h4 className="footer-home__col-title">Research Areas</h4>
             <ul className="footer-home__link-list">
               {researchLinks.map((link) => (
-                <li key={link}>
-                  <a href="#research" className="footer-home__link">
+                <li key={link.id}>
+                  <Link to={`/?tab=${link.id}#research`} className="footer-home__link">
                     <ArrowUpRight size={13} className="footer-home__link-icon" />
-                    {link}
-                  </a>
+                    {link.label}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -89,9 +96,15 @@ const FooterHome: React.FC = () => {
               </a>
             </div>
 
-            <a href="mailto:pravayanpvtltd@gmail.com" className="footer-home__cta">
+            <button 
+              onClick={(e) => {
+                e.preventDefault();
+                window.dispatchEvent(new CustomEvent('openContactModal'));
+              }}
+              className="footer-home__cta w-full text-left border-none bg-transparent cursor-pointer font-inherit"
+            >
               Send us a Message <ExternalLink size={14} />
-            </a>
+            </button>
           </div>
         </div>
 

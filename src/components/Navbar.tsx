@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const Navbar = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -10,6 +10,12 @@ const Navbar = () => {
   const [query, setQuery] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const location = useLocation();
+
+  useEffect(() => {
+    const handleOpenContact = () => setIsContactOpen(true);
+    window.addEventListener('openContactModal', handleOpenContact);
+    return () => window.removeEventListener('openContactModal', handleOpenContact);
+  }, []);
 
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

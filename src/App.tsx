@@ -11,11 +11,20 @@ import Navbar from './components/Navbar';
 import ChatBot from './components/ChatBot';
 
 function ScrollToTop() {
-  const { pathname } = useLocation();
+  const location = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+    setTimeout(() => {
+      if (location.hash) {
+        const element = document.getElementById(location.hash.replace('#', ''));
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      } else {
+        window.scrollTo(0, 0);
+      }
+    }, 100);
+  }, [location]);
 
   return null;
 }

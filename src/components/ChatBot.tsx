@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, Bot, User, Phone, Mail } from 'lucide-react';
+import { MessageCircle, X, Send, Bot, User, Mail } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const BOT_RESPONSES: Record<string, string> = {

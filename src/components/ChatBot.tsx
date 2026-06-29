@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, Bot, User, Mail } from 'lucide-react';
+import { MessageCircle, X, Send, Bot, User, Mail, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const BOT_RESPONSES: Record<string, string> = {
@@ -7,7 +7,7 @@ const BOT_RESPONSES: Record<string, string> = {
   water: "Pravayan monitors 40+ water quality parameters including pH, dissolved oxygen, BOD/COD, turbidity, heavy metals, and microplastics. Our sensor networks span 12 major Indian rivers with 99.9% uptime. Would you like to know more?",
   air: "Our air quality monitoring covers PM2.5, PM10, NOx, SO2, Ozone, and VOC concentrations. We provide hyper-local pollution mapping for smart cities and industrial zones. Ask me more!",
   contact: "You can reach us at hello@pravayan.com or call +91 12345 67890. Our team is at IIT Varanasi Campus. We respond within 24 hours. Shall I help you with anything else?",
-  research: "Pravayan's research spans 6 domains: Water Quality, Air Monitoring, Soil Health, Hydrology, Climate & Micrometeorology, and Biomonitoring. Which area interests you most?",
+  research: "Pravayan's research spans 5 domains: Water Quality, Air Monitoring, Soil Health, Hydrology, and Climate & Micrometeorology. Which area interests you most?",
   soil: "Our soil sensing technology measures NPK levels, moisture, salinity, pH, and microbial activity in real time — helping farmers optimize inputs and improve crop sustainability.",
   services: "We offer IoT sensor deployment, real-time data dashboards, environmental consulting, and custom sensing solutions. Would you like details on any specific service?",
 };
@@ -36,6 +36,7 @@ const ChatBot: React.FC = () => {
   const [email, setEmail] = useState('');
   const [query, setQuery] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([
     { id: 1, from: 'bot', text: BOT_RESPONSES.default, time: new Date() },
   ]);
@@ -46,6 +47,11 @@ const ChatBot: React.FC = () => {
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isTyping]);
+
+  const triggerToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(null), 3000);
+  };
 
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,12 +66,12 @@ const ChatBot: React.FC = () => {
         setIsContactOpen(false);
         setEmail('');
         setQuery('');
-        alert("Thank you! Your query has been submitted.");
+        triggerToast("Thank you! Your query has been submitted.");
       } else {
-        alert("Something went wrong. Please try again.");
+        triggerToast("Something went wrong. Please try again.");
       }
     } catch {
-      alert("Could not connect to server. Please try again later.");
+      triggerToast("Could not connect to server. Please try again later.");
     } finally {
       setIsSubmitting(false);
     }
@@ -106,6 +112,40 @@ const ChatBot: React.FC = () => {
 
   return (
     <>
+      {/* Toast Notification Banner */}
+      <AnimatePresence>
+        {(isSubmitting || toastMessage) && (
+          <motion.div
+            initial={{ opacity: 0, y: 50, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.9 }}
+            className="fixed bottom-6 right-6 z-[200] flex flex-col gap-3 pointer-events-none"
+          >
+            {isSubmitting && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                className="bg-white text-slate-800 text-[14px] font-medium px-5 py-3 rounded-xl shadow-xl flex items-center gap-3 pointer-events-auto border border-slate-200/60"
+              >
+                <Loader2 size={16} className="animate-spin text-slate-400" />
+                Submitting...
+              </motion.div>
+            )}
+            {!isSubmitting && toastMessage && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                className="bg-[#0B1525] text-white text-[14px] font-medium px-6 py-3.5 rounded-full shadow-2xl flex items-center gap-3 pointer-events-auto border border-white/5"
+              >
+                {toastMessage}
+              </motion.div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Chat Window */}
       <div className={`chatbot-window ${isOpen ? 'chatbot-window--open' : ''}`} role="dialog" aria-label="Chatbot" aria-hidden={!isOpen}>
         {/* Header */}

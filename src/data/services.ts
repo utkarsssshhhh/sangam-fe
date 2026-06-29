@@ -41,7 +41,7 @@ export interface Service {
 export const services: Service[] = [
   {
     slug: 'digital-twins-simulation',
-    title: 'Digital Twins & Simulation',
+    title: 'Digital Twins',
     shortDesc: 'Living virtual replicas to test decisions before you build.',
     icon: Layers,
     imgUrl: '/DigitalTwinImg.png',

@@ -6,6 +6,8 @@ import ServiceDetailPage from './pages/ServiceDetailPage';
 import ProductsPage from './pages/ProductsPage';
 import AboutUs from './pages/AboutUs';
 import Treatment from './pages/Treatment';
+import AdminPortal from './pages/AdminPortal';
+import Careers from './pages/Careers';
 
 import Navbar from './components/Navbar';
 import ChatBot from './components/ChatBot';
@@ -30,10 +32,13 @@ function ScrollToTop() {
 }
 
 function App() {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith('/AdminOnly');
+
   return (
     <>
       <ScrollToTop />
-      <Navbar />
+      {!isAdminRoute && <Navbar />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<AboutUs />} />
@@ -41,8 +46,10 @@ function App() {
         <Route path="/services/:slug" element={<ServiceDetailPage />} />
         <Route path="/treatment" element={<Treatment />} />
         <Route path="/products" element={<ProductsPage />} />
+        <Route path="/careers" element={<Careers />} />
+        <Route path="/AdminOnly" element={<AdminPortal />} />
       </Routes>
-      <ChatBot />
+      {!isAdminRoute && <ChatBot />}
     </>
   );
 }

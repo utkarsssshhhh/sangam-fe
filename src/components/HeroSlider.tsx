@@ -28,7 +28,7 @@ interface Slide {
 const slides: Slide[] = [
   {
     id: 1,
-    title: 'Digital Twins & Simulation',
+    title: 'Digital Twins',
     description: 'Living virtual replicas to test decisions before you build.',
     icon: Layers,
     badge: 'Digital Twins',
@@ -255,9 +255,6 @@ const HeroSlider: React.FC = () => {
 
       {/* Bottom Controls */}
       <div className="hero-bottom-controls">
-        <span className="hero-counter">
-          <strong>{(current + 1).toString().padStart(2, '0')}</strong> <span className="hero-counter-divider">/</span> {slides.length.toString().padStart(2, '0')}
-        </span>
         <div className="hero-dots-container">
           {slides.map((_, i) => (
             <button

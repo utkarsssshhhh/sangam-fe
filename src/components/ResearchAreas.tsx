@@ -64,16 +64,7 @@ const researchAreas: ResearchArea[] = [
     color: '#6D5E9E',
     tags: ['CMIP6 Downscaling', 'Vulnerability Audits', 'Asset Protection', 'Carbon Sink Maps'],
   },
-  {
-    id: 'biomonitoring',
-    icon: Activity,
-    title: 'Ecological Biomonitoring',
-    shortDesc: 'Indicator species and bio-assessment protocols.',
-    longDesc: 'Our biodiversity assessments combine traditional field sampling of macroinvertebrates and vegetation cover with modern remote sensing. We generate ecological health scorecards to evaluate riparian corridor integrity.',
-    image: '/research_bio.png',
-    color: '#e28743',
-    tags: ['EPT Richness Index', 'Canopy Cover GIS', 'Riparian Scoring', 'Ecosystem Auditing'],
-  },
+
 ];
 
 const ResearchAreas: React.FC = () => {
@@ -111,7 +102,7 @@ const ResearchAreas: React.FC = () => {
         
         {/* Section Header */}
         <div className="text-center mb-16">
-          <span className="text-[13px] font-bold uppercase tracking-widest text-[#1C7C9C] bg-[#1C7C9C]/10 px-4 py-1.5 rounded-full border border-[#1C7C9C]/20">R&D Domains</span>
+          <span className="text-[13px] font-bold uppercase tracking-widest text-[#1C7C9C] bg-[#1C7C9C]/10 px-4 py-1.5 rounded-full border border-[#1C7C9C]/20">Domains</span>
           <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mt-6 mb-6">Areas of Research</h2>
           <p className="text-slate-600 max-w-2xl mx-auto text-lg leading-relaxed">
             Exploring the intersection of data science, sensor physics, and environmental biology.
@@ -167,21 +158,17 @@ const ResearchAreas: React.FC = () => {
 
             {/* Content Container (Frosted Glass) */}
             <div className="relative z-10 p-8 md:p-12 w-full max-w-3xl">
-              <div className="flex items-center gap-4 mb-6 animate-[fadeInUp_0.5s_ease-out_forwards]">
+              <div className="flex items-center gap-4 mb-4 animate-[fadeInUp_0.6s_ease-out_forwards]">
                 <div 
-                  className="w-14 h-14 rounded-2xl flex items-center justify-center text-white backdrop-blur-md border border-white/20 shadow-lg"
+                  className="w-14 h-14 rounded-2xl flex items-center justify-center text-white backdrop-blur-md border border-white/20 shadow-lg shrink-0"
                   style={{ backgroundColor: `${activeArea.color}90` }}
                 >
                   <ActiveIcon size={28} strokeWidth={2.5} />
                 </div>
-                <div className="text-[11px] font-bold text-white px-3 py-1.5 rounded-lg backdrop-blur-md bg-white/10 border border-white/20 uppercase tracking-widest">
-                  Active R&D Field
-                </div>
+                <h3 key={`title-${activeArea.id}`} className="text-3xl md:text-4xl font-extrabold text-white leading-tight">
+                  {activeArea.title}
+                </h3>
               </div>
-
-              <h3 key={`title-${activeArea.id}`} className="text-3xl md:text-4xl font-extrabold text-white mb-4 leading-tight animate-[fadeInUp_0.6s_ease-out_forwards]">
-                {activeArea.title}
-              </h3>
               
               <p key={`desc-${activeArea.id}`} className="text-[15px] md:text-[17px] text-slate-300 leading-relaxed mb-8 animate-[fadeInUp_0.7s_ease-out_forwards]">
                 {activeArea.longDesc}

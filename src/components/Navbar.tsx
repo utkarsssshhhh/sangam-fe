@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Loader2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 const Navbar = () => {
@@ -9,7 +9,13 @@ const Navbar = () => {
   const [email, setEmail] = useState('');
   const [query, setQuery] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
   const location = useLocation();
+
+  const triggerToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(null), 3000);
+  };
 
   useEffect(() => {
     const handleOpenContact = () => setIsContactOpen(true);
@@ -30,12 +36,12 @@ const Navbar = () => {
         setIsContactOpen(false);
         setEmail('');
         setQuery('');
-        alert("Thank you! Your query has been submitted.");
+        triggerToast("Thank you! Your query has been submitted.");
       } else {
-        alert("Something went wrong. Please try again.");
+        triggerToast("Something went wrong. Please try again.");
       }
     } catch {
-      alert("Could not connect to server. Please try again later.");
+      triggerToast("Could not connect to server. Please try again later.");
     } finally {
       setIsSubmitting(false);
     }
@@ -43,6 +49,40 @@ const Navbar = () => {
 
   return (
     <>
+      {/* Toast Notification Banner */}
+      <AnimatePresence>
+        {(isSubmitting || toastMessage) && (
+          <motion.div
+            initial={{ opacity: 0, y: 50, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.9 }}
+            className="fixed bottom-6 right-6 z-[200] flex flex-col gap-3 pointer-events-none"
+          >
+            {isSubmitting && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                className="bg-white text-slate-800 text-[14px] font-medium px-5 py-3 rounded-xl shadow-xl flex items-center gap-3 pointer-events-auto border border-slate-200/60"
+              >
+                <Loader2 size={16} className="animate-spin text-slate-400" />
+                Submitting...
+              </motion.div>
+            )}
+            {!isSubmitting && toastMessage && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                className="bg-[#0B1525] text-white text-[14px] font-medium px-6 py-3.5 rounded-full shadow-2xl flex items-center gap-3 pointer-events-auto border border-white/5"
+              >
+                {toastMessage}
+              </motion.div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <nav
         className="fixed top-0 left-0 right-0 z-40 bg-white/70 backdrop-blur-[24px] saturate-[1.5] border-b border-black/5 shadow-[0_4px_30px_rgba(0,0,0,0.03)] transition-all duration-500"
       >
@@ -80,6 +120,13 @@ const Navbar = () => {
                   }`}
               >
                 Treatments
+              </Link>
+              <Link
+                to="/careers"
+                className={`text-[15px] font-bold transition-colors duration-300 ${location.pathname === '/careers' ? 'text-[#3DA5C4]' : 'text-slate-700 hover:text-[#3DA5C4]'
+                  }`}
+              >
+                Careers
               </Link>
               <Link
                 to="/about"
@@ -136,6 +183,13 @@ const Navbar = () => {
                     className="text-base font-bold text-slate-800 hover:text-[#3DA5C4] transition-colors px-4 py-2 rounded-xl hover:bg-white/50"
                   >
                     Treatments
+                  </Link>
+                  <Link
+                    to="/careers"
+                    onClick={() => setIsMobileOpen(false)}
+                    className="text-base font-bold text-slate-800 hover:text-[#3DA5C4] transition-colors px-4 py-2 rounded-xl hover:bg-white/50"
+                  >
+                    Careers
                   </Link>
                   <Link
                     to="/about"

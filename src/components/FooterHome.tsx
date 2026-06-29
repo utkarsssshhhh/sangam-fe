@@ -9,15 +9,15 @@ const FooterHome: React.FC = () => {
     { label: 'Home', path: '/' },
     { label: 'About Us', path: '/about' },
     { label: 'Products', path: '/products' },
-    { label: 'Treatments', path: '/treatment' }
+    { label: 'Treatments', path: '/treatment' },
+    { label: 'Careers', path: '/careers' }
   ];
   const researchLinks = [
     { label: 'Water Quality', id: 'water' },
     { label: 'Air Monitoring', id: 'air' },
     { label: 'Soil Sensing', id: 'soil' },
     { label: 'Hydrological Modeling', id: 'hydrology' },
-    { label: 'Climate Data', id: 'climate' },
-    { label: 'Biomonitoring', id: 'biomonitoring' }
+    { label: 'Climate Data', id: 'climate' }
   ];
 
   return (

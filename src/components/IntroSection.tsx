@@ -112,13 +112,15 @@ const IntroSection: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {pillars.map(({ icon: Icon, title, description, color }) => (
                 <div key={title} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow duration-300">
-                  <div 
-                    className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
-                    style={{ backgroundColor: `${color}15`, color: color }}
-                  >
-                    <Icon size={24} strokeWidth={2.5} />
+                  <div className="flex items-center gap-4 mb-3">
+                    <div 
+                      className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
+                      style={{ backgroundColor: `${color}15`, color: color }}
+                    >
+                      <Icon size={24} strokeWidth={2.5} />
+                    </div>
+                    <h4 className="text-[15px] font-bold text-slate-900">{title}</h4>
                   </div>
-                  <h4 className="text-[15px] font-bold text-slate-900 mb-2">{title}</h4>
                   <p className="text-[13px] text-slate-500 leading-relaxed">{description}</p>
                 </div>
               ))}

@@ -31,7 +31,7 @@ const JobApplicationsTab: React.FC<{ triggerToast: (msg: string) => void }> = ({
 
   const fetchData = async () => {
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      const API_URL = 'https://pravayan-be-v3.onrender.com';
       const [appsRes, posRes] = await Promise.all([
         fetch(`${API_URL}/api/v1/applications`),
         fetch(`${API_URL}/api/v1/positions`)
@@ -61,7 +61,7 @@ const JobApplicationsTab: React.FC<{ triggerToast: (msg: string) => void }> = ({
 
   const executeDelete = async (id: string) => {
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      const API_URL = 'https://pravayan-be-v3.onrender.com';
       const res = await fetch(`${API_URL}/api/v1/applications/${id}`, {
         method: 'DELETE'
       });
@@ -82,7 +82,7 @@ const JobApplicationsTab: React.FC<{ triggerToast: (msg: string) => void }> = ({
     const nextStatus = currentStatus === 'New' ? 'Reviewed' : 'New';
     
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      const API_URL = 'https://pravayan-be-v3.onrender.com';
       const res = await fetch(`${API_URL}/api/v1/applications/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },

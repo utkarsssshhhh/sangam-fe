@@ -69,7 +69,8 @@ const AdminPortal: React.FC = () => {
     setIsSyncing(true);
     try {
       // 1. Try to fetch from real backend first
-      const response = await fetch('http://localhost:3001/api/v1/feedback', {
+      const API_URL = 'https://pravayan-be-v3.onrender.com';
+      const response = await fetch(`${API_URL}/api/v1/feedback`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       });
@@ -123,8 +124,9 @@ const AdminPortal: React.FC = () => {
     try {
       const uTrim = emailInput.trim();
       const pTrim = passwordInput;
-
-      const response = await fetch('http://localhost:3001/api/v1/admin/login', {
+      const API_URL = 'https://pravayan-be-v3.onrender.com';
+      console.log("Resolved API_URL:", API_URL);
+      const response = await fetch(`${API_URL}/api/v1/admin/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: uTrim, password: pTrim })
@@ -173,7 +175,8 @@ const AdminPortal: React.FC = () => {
     // Backend update if live
     if (syncMode === 'live') {
       try {
-        await fetch(`http://localhost:3001/api/v1/feedback/${id}`, {
+        const API_URL = 'https://pravayan-be-v3.onrender.com';
+        await fetch(`${API_URL}/api/v1/feedback/${id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ status: nextStatus })
@@ -194,7 +197,8 @@ const AdminPortal: React.FC = () => {
 
     if (syncMode === 'live') {
       try {
-        await fetch(`http://localhost:3001/api/v1/feedback/${id}`, {
+        const API_URL = 'https://pravayan-be-v3.onrender.com';
+        await fetch(`${API_URL}/api/v1/feedback/${id}`, {
           method: 'DELETE'
         });
       } catch (e) {

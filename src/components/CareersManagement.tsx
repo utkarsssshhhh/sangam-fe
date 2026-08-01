@@ -30,7 +30,7 @@ const CareersManagement: React.FC<{ triggerToast: (msg: string) => void }> = ({ 
 
   const fetchPositions = async () => {
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      const API_URL = 'https://pravayan-be-v3.onrender.com';
       const res = await fetch(`${API_URL}/api/v1/positions`);
       if (res.ok) {
         const data = await res.json();
@@ -49,7 +49,7 @@ const CareersManagement: React.FC<{ triggerToast: (msg: string) => void }> = ({ 
     setIsSubmitting(true);
 
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      const API_URL = 'https://pravayan-be-v3.onrender.com';
       const res = await fetch(`${API_URL}/api/v1/positions`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -80,7 +80,7 @@ const CareersManagement: React.FC<{ triggerToast: (msg: string) => void }> = ({ 
 
   const executeDelete = async (id: string) => {
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      const API_URL = 'https://pravayan-be-v3.onrender.com';
       const res = await fetch(`${API_URL}/api/v1/positions/${id}`, {
         method: 'DELETE'
       });

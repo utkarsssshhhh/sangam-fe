@@ -57,7 +57,7 @@ const ChatBot: React.FC = () => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      const API_URL = 'https://pravayan-be-v3.onrender.com';
       const res = await fetch(`${API_URL}/api/v1/feedback`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

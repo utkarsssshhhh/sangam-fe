@@ -30,7 +30,8 @@ const JobApplicationModal: React.FC<JobApplicationModalProps> = ({ isOpen, onClo
     setIsSubmitting(true);
 
     try {
-      const res = await fetch('http://localhost:3001/api/v1/applications', {
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      const res = await fetch(`${API_URL}/api/v1/applications`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -92,23 +93,23 @@ const JobApplicationModal: React.FC<JobApplicationModalProps> = ({ isOpen, onClo
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                   <div>
                     <label className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5 block">Full Name *</label>
-                    <input required name="name" value={formData.name} onChange={handleChange} type="text" placeholder="John Doe" className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#3DA5C4] text-sm" />
+                    <input required name="name" value={formData.name} onChange={handleChange} type="text" placeholder="Your Name" className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#3DA5C4] text-sm" />
                   </div>
                   <div>
                     <label className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5 block">Email Address *</label>
-                    <input required name="email" value={formData.email} onChange={handleChange} type="email" placeholder="john@example.com" className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#3DA5C4] text-sm" />
+                    <input required name="email" value={formData.email} onChange={handleChange} type="email" placeholder="Your Email" className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#3DA5C4] text-sm" />
                   </div>
                   <div>
                     <label className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5 block">Phone Number</label>
-                    <input name="phone" value={formData.phone} onChange={handleChange} type="tel" placeholder="+91 98765 43210" className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#3DA5C4] text-sm" />
+                    <input name="phone" value={formData.phone} onChange={handleChange} type="tel" placeholder="Your Phone Number" className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#3DA5C4] text-sm" />
                   </div>
                   <div>
                     <label className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5 block">LinkedIn / GitHub Link</label>
-                    <input name="resumeLink" value={formData.resumeLink} onChange={handleChange} type="url" placeholder="https://linkedin.com/in/johndoe" className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#3DA5C4] text-sm" />
+                    <input name="resumeLink" value={formData.resumeLink} onChange={handleChange} type="url" placeholder="Your LinkedIn / GitHub Link" className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#3DA5C4] text-sm" />
                   </div>
                   <div>
                     <label className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5 block">Resume Link *</label>
-                    <input required name="message" value={formData.message} onChange={handleChange} type="url" placeholder="Link to your Google Drive / Dropbox resume" className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#3DA5C4] text-sm" />
+                    <input required name="message" value={formData.message} onChange={handleChange} type="url" placeholder="Link to your Google Drive / Dropbox Resume" className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#3DA5C4] text-sm" />
                   </div>
                   <button
                     type="submit"

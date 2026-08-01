@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Trash2, Loader2, User, Mail, Phone, ExternalLink, Briefcase, FileText, CheckCircle, Clock } from 'lucide-react';
 
 interface JobApplication {
@@ -22,6 +23,7 @@ const JobApplicationsTab: React.FC<{ triggerToast: (msg: string) => void }> = ({
   const [applications, setApplications] = useState<JobApplication[]>([]);
   const [positions, setPositions] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(true);
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
 
   useEffect(() => {
     fetchData();
@@ -29,9 +31,10 @@ const JobApplicationsTab: React.FC<{ triggerToast: (msg: string) => void }> = ({
 
   const fetchData = async () => {
     try {
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
       const [appsRes, posRes] = await Promise.all([
-        fetch('http://localhost:3001/api/v1/applications'),
-        fetch('http://localhost:3001/api/v1/positions')
+        fetch(`${API_URL}/api/v1/applications`),
+        fetch(`${API_URL}/api/v1/positions`)
       ]);
 
       if (appsRes.ok && posRes.ok) {
@@ -52,11 +55,14 @@ const JobApplicationsTab: React.FC<{ triggerToast: (msg: string) => void }> = ({
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!window.confirm('Are you sure you want to delete this application?')) return;
-    
+  const handleDelete = (id: string) => {
+    setConfirmDeleteId(id);
+  };
+
+  const executeDelete = async (id: string) => {
     try {
-      const res = await fetch(`http://localhost:3001/api/v1/applications/${id}`, {
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      const res = await fetch(`${API_URL}/api/v1/applications/${id}`, {
         method: 'DELETE'
       });
       if (res.ok) {
@@ -67,6 +73,8 @@ const JobApplicationsTab: React.FC<{ triggerToast: (msg: string) => void }> = ({
       }
     } catch (e) {
       triggerToast('Error deleting application');
+    } finally {
+      setConfirmDeleteId(null);
     }
   };
 
@@ -74,7 +82,8 @@ const JobApplicationsTab: React.FC<{ triggerToast: (msg: string) => void }> = ({
     const nextStatus = currentStatus === 'New' ? 'Reviewed' : 'New';
     
     try {
-      const res = await fetch(`http://localhost:3001/api/v1/applications/${id}`, {
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      const res = await fetch(`${API_URL}/api/v1/applications/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: nextStatus })
@@ -98,7 +107,49 @@ const JobApplicationsTab: React.FC<{ triggerToast: (msg: string) => void }> = ({
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 relative">
+      <AnimatePresence>
+        {confirmDeleteId && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+              onClick={() => setConfirmDeleteId(null)}
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative bg-white rounded-3xl shadow-2xl p-8 w-full max-w-sm overflow-hidden text-center"
+            >
+              <div className="w-16 h-16 rounded-full bg-rose-100 flex items-center justify-center text-rose-500 mx-auto mb-4">
+                <Trash2 size={28} />
+              </div>
+              <h3 className="text-xl font-extrabold text-slate-900 mb-2">Delete Application?</h3>
+              <p className="text-slate-500 text-sm mb-8">
+                Are you sure you want to delete this application? This action cannot be undone.
+              </p>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setConfirmDeleteId(null)}
+                  className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 rounded-xl transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => executeDelete(confirmDeleteId)}
+                  className="flex-1 bg-rose-500 hover:bg-rose-600 text-white font-bold py-3 rounded-xl transition-colors shadow-lg shadow-rose-500/20"
+                >
+                  Delete
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
       <div className="flex items-center justify-between mb-8">
         <h2 className="text-2xl font-extrabold text-slate-900 flex items-center gap-2">
           <Briefcase className="text-[#3DA5C4]" /> Job Applications

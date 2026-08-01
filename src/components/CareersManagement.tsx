@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Trash2, Briefcase, MapPin, Building2, Loader2, AlertCircle } from 'lucide-react';
 
 interface Position {
@@ -21,6 +22,7 @@ const CareersManagement: React.FC<{ triggerToast: (msg: string) => void }> = ({ 
   const [department, setDepartment] = useState('');
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
 
   useEffect(() => {
     fetchPositions();
@@ -28,7 +30,8 @@ const CareersManagement: React.FC<{ triggerToast: (msg: string) => void }> = ({ 
 
   const fetchPositions = async () => {
     try {
-      const res = await fetch('http://localhost:3001/api/v1/positions');
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      const res = await fetch(`${API_URL}/api/v1/positions`);
       if (res.ok) {
         const data = await res.json();
         setPositions(data);
@@ -46,7 +49,8 @@ const CareersManagement: React.FC<{ triggerToast: (msg: string) => void }> = ({ 
     setIsSubmitting(true);
 
     try {
-      const res = await fetch('http://localhost:3001/api/v1/positions', {
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      const res = await fetch(`${API_URL}/api/v1/positions`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title, department, location, description })
@@ -70,11 +74,14 @@ const CareersManagement: React.FC<{ triggerToast: (msg: string) => void }> = ({ 
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!window.confirm('Are you sure you want to delete this position?')) return;
-    
+  const handleDelete = (id: string) => {
+    setConfirmDeleteId(id);
+  };
+
+  const executeDelete = async (id: string) => {
     try {
-      const res = await fetch(`http://localhost:3001/api/v1/positions/${id}`, {
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      const res = await fetch(`${API_URL}/api/v1/positions/${id}`, {
         method: 'DELETE'
       });
       if (res.ok) {
@@ -85,11 +92,54 @@ const CareersManagement: React.FC<{ triggerToast: (msg: string) => void }> = ({ 
       }
     } catch (e) {
       triggerToast('Error deleting position.');
+    } finally {
+      setConfirmDeleteId(null);
     }
   };
 
   return (
-    <div className="flex flex-col lg:flex-row gap-8">
+    <div className="flex flex-col lg:flex-row gap-8 relative">
+      <AnimatePresence>
+        {confirmDeleteId && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+              onClick={() => setConfirmDeleteId(null)}
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative bg-white rounded-3xl shadow-2xl p-8 w-full max-w-sm overflow-hidden text-center"
+            >
+              <div className="w-16 h-16 rounded-full bg-rose-100 flex items-center justify-center text-rose-500 mx-auto mb-4">
+                <Trash2 size={28} />
+              </div>
+              <h3 className="text-xl font-extrabold text-slate-900 mb-2">Delete Position?</h3>
+              <p className="text-slate-500 text-sm mb-8">
+                Are you sure you want to delete this position? This action cannot be undone.
+              </p>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setConfirmDeleteId(null)}
+                  className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 rounded-xl transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => executeDelete(confirmDeleteId)}
+                  className="flex-1 bg-rose-500 hover:bg-rose-600 text-white font-bold py-3 rounded-xl transition-colors shadow-lg shadow-rose-500/20"
+                >
+                  Delete
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
       {/* Create Form */}
       <div className="w-full lg:w-1/3">
         <div className="bg-white rounded-3xl border border-slate-200/60 shadow-sm p-6 sticky top-24">

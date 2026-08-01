@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Briefcase, MapPin, Building2, ExternalLink, Loader2, Search, ArrowRight } from 'lucide-react';
+import { Briefcase, MapPin, Building2, ExternalLink, Loader2, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from '../components/Navbar';
 import FooterHome from '../components/FooterHome';
@@ -17,27 +17,40 @@ interface Position {
 const Careers: React.FC = () => {
   const [positions, setPositions] = useState<Position[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPosition, setSelectedPosition] = useState<{ id: string, title: string } | null>(null);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const triggerToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(null), 3000);
+  };
 
   useEffect(() => {
+    const fetchPositions = async () => {
+      try {
+        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+        const response = await fetch(`${API_URL}/api/v1/positions`);
+        if (response.ok) {
+          const data = await response.json();
+          setPositions(data);
+          setError(null);
+        } else {
+          setError('Failed to fetch positions. Please try again later.');
+        }
+      } catch (err) {
+        console.error('Failed to fetch positions:', err);
+        setError('An error occurred while fetching positions.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
     fetchPositions();
   }, []);
 
-  const fetchPositions = async () => {
-    try {
-      const response = await fetch('http://localhost:3001/api/v1/positions');
-      if (response.ok) {
-        const data = await response.json();
-        setPositions(data);
-      }
-    } catch (error) {
-      console.error('Failed to fetch positions:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
+  
   const handleApplyClick = (positionId?: string, positionTitle?: string) => {
     if (positionId && positionTitle) {
       setSelectedPosition({ id: positionId, title: positionTitle });
@@ -49,6 +62,26 @@ const Careers: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#f8fafc] font-sans">
+      <AnimatePresence>
+        {toastMessage && (
+          <motion.div
+            initial={{ opacity: 0, y: 50, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.9 }}
+            className="fixed bottom-6 right-6 z-[200] flex flex-col gap-3 pointer-events-none"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="bg-[#0B1525] text-white text-[14px] font-medium px-6 py-3.5 rounded-full shadow-2xl flex items-center gap-3 pointer-events-auto border border-white/5"
+            >
+              {toastMessage}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <Navbar />
       
       <JobApplicationModal 
@@ -56,6 +89,7 @@ const Careers: React.FC = () => {
         onClose={() => setIsModalOpen(false)} 
         positionId={selectedPosition?.id}
         positionTitle={selectedPosition?.title}
+        triggerToast={triggerToast}
       />
 
       {/* Hero Section */}
@@ -90,6 +124,13 @@ const Careers: React.FC = () => {
         {isLoading ? (
           <div className="flex justify-center items-center py-20 text-slate-400">
             <Loader2 className="w-10 h-10 animate-spin text-[#1C7C9C]" />
+          </div>
+        ) : error ? (
+          <div className="text-center py-20 bg-white rounded-3xl border border-red-100 shadow-sm">
+            <h3 className="text-xl font-bold text-red-600 mb-2">Oops! Something went wrong</h3>
+            <p className="text-slate-500 max-w-md mx-auto">
+              {error}
+            </p>
           </div>
         ) : positions.length === 0 ? (
           <div className="text-center py-20 bg-white rounded-3xl border border-slate-100 shadow-sm">

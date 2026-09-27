@@ -145,7 +145,7 @@ const ServicesPage = () => {
               />
             ))}
 
-            {/* Why Pravayan Card */}
+            {/* Why Sangam Card */}
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={gridInView ? { opacity: 1, y: 0 } : {}}
@@ -163,7 +163,7 @@ const ServicesPage = () => {
 
               <div className="relative z-10">
                 <h3 className="text-2xl font-heading font-bold text-white mb-5">
-                  Why Pravayan
+                  Why Sangam
                 </h3>
                 <ul className="space-y-3">
                   {[
@@ -204,7 +204,7 @@ const ServicesPage = () => {
               Ready to transform your environmental operations?
             </h2>
             <p className="text-white/70 text-sm md:text-base max-w-xl mx-auto mb-8">
-              Get in touch with our team to discuss how Pravayan's technology can address your specific challenges.
+              Get in touch with our team to discuss how Sangam's technology can address your specific challenges.
             </p>
             <a
               href="#"

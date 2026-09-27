@@ -47,7 +47,7 @@ export const services: Service[] = [
     imgUrl: '/DigitalTwinImg.png',
     heroTagline: 'Build it digitally. Perfect it virtually. Deploy confidently.',
     fullDescription:
-      'Pravayan\'s Digital Twin platform creates living, data-driven virtual replicas of water infrastructure, river systems, and environmental assets. These digital twins continuously ingest real-time sensor data, satellite feeds, and operational inputs to mirror the physical world with high fidelity. Engineers and planners use them to simulate scenarios — testing the impact of new infrastructure, climate events, or operational changes — without touching the real system. The result: better decisions, fewer surprises, and optimised performance.',
+      'Sangam\'s Digital Twin platform creates living, data-driven virtual replicas of water infrastructure, river systems, and environmental assets. These digital twins continuously ingest real-time sensor data, satellite feeds, and operational inputs to mirror the physical world with high fidelity. Engineers and planners use them to simulate scenarios — testing the impact of new infrastructure, climate events, or operational changes — without touching the real system. The result: better decisions, fewer surprises, and optimised performance.',
     features: [
       'Real-time synchronised digital replicas',
       'Physics-based hydraulic and hydrological simulation',
@@ -161,7 +161,7 @@ export const services: Service[] = [
     imgUrl: '/smart_waste.png',
     heroTagline: 'Intelligent systems for a cleaner tomorrow',
     fullDescription:
-      'Pravayan\'s Smart Waste Management solution brings data-driven intelligence to one of India\'s most pressing environmental challenges. Using drone surveys, IoT fill-level sensors, and geospatial analysis, we help municipalities and tourism boards map waste accumulation patterns, optimize collection routes, and identify illegal dumping sites. Our platform is designed for pilgrimage towns, hill stations, and high-footfall zones where waste surges are seasonal and unpredictable.',
+      'Sangam\'s Smart Waste Management solution brings data-driven intelligence to one of India\'s most pressing environmental challenges. Using drone surveys, IoT fill-level sensors, and geospatial analysis, we help municipalities and tourism boards map waste accumulation patterns, optimize collection routes, and identify illegal dumping sites. Our platform is designed for pilgrimage towns, hill stations, and high-footfall zones where waste surges are seasonal and unpredictable.',
     features: [
       'Drone-based waste volume estimation and hotspot mapping',
       'IoT fill-level sensors for bin monitoring',
@@ -199,7 +199,7 @@ export const services: Service[] = [
     imgUrl: '/spectral_intel.png',
     heroTagline: 'Beyond visible. Beyond imagination.',
     fullDescription:
-      'Spectral Intelligence unlocks the invisible signatures of environmental change. Pravayan\'s spectral analysis team processes multispectral and hyperspectral imagery from satellites, drones, and ground-based instruments to detect subtle changes in vegetation health, water composition, soil contamination, and atmospheric conditions that are invisible to the naked eye. Our proprietary spectral indices and classification algorithms transform raw reflectance data into decision-ready environmental intelligence.',
+      'Spectral Intelligence unlocks the invisible signatures of environmental change. Sangam\'s spectral analysis team processes multispectral and hyperspectral imagery from satellites, drones, and ground-based instruments to detect subtle changes in vegetation health, water composition, soil contamination, and atmospheric conditions that are invisible to the naked eye. Our proprietary spectral indices and classification algorithms transform raw reflectance data into decision-ready environmental intelligence.',
     features: [
       'Multispectral vegetation index analysis (NDVI, EVI, SAVI)',
       'Hyperspectral mineral and contaminant mapping',
@@ -237,7 +237,7 @@ export const services: Service[] = [
     imgUrl: '/iot_sensor.png',
     heroTagline: 'Connected. Intelligent. Always on.',
     fullDescription:
-      'Pravayan designs, deploys, and maintains rugged IoT sensor networks purpose-built for harsh environmental conditions across India. From Himalayan headwaters to coastal estuaries, our sensor nodes deliver continuous, tamper-resistant telemetry over LoRaWAN, NB-IoT, and satellite backhaul. Each node is engineered for solar-powered autonomy, edge computing capability, and seamless integration with our cloud analytics platform — creating an always-on nervous system for water infrastructure.',
+      'Sangam designs, deploys, and maintains rugged IoT sensor networks purpose-built for harsh environmental conditions across India. From Himalayan headwaters to coastal estuaries, our sensor nodes deliver continuous, tamper-resistant telemetry over LoRaWAN, NB-IoT, and satellite backhaul. Each node is engineered for solar-powered autonomy, edge computing capability, and seamless integration with our cloud analytics platform — creating an always-on nervous system for water infrastructure.',
     features: [
       'Ruggedised IP68-rated sensor enclosures',
       'Multi-protocol connectivity (LoRaWAN, NB-IoT, Satellite)',
@@ -275,7 +275,7 @@ export const services: Service[] = [
     imgUrl: '/river_health.png',
     heroTagline: 'The pulse of every river, measured.',
     fullDescription:
-      'Pravayan\'s River Health Assessment framework provides a standardised, science-backed methodology to evaluate the ecological, hydrological, and socio-cultural health of river corridors. Combining field surveys, remote sensing, water quality analytics, and biodiversity indices, we generate comprehensive River Health Scorecards that translate complex data into intuitive ratings. These assessments inform policy decisions, restoration priorities, and public awareness campaigns for river rejuvenation programmes.',
+      'Sangam\'s River Health Assessment framework provides a standardised, science-backed methodology to evaluate the ecological, hydrological, and socio-cultural health of river corridors. Combining field surveys, remote sensing, water quality analytics, and biodiversity indices, we generate comprehensive River Health Scorecards that translate complex data into intuitive ratings. These assessments inform policy decisions, restoration priorities, and public awareness campaigns for river rejuvenation programmes.',
     features: [
       'Standardised multi-dimensional health scoring framework',
       'Ecological, hydrological, and geomorphological assessment',
@@ -313,7 +313,7 @@ export const services: Service[] = [
     imgUrl: '/urban_leak.png',
     heroTagline: 'Every litre accounted for.',
     fullDescription:
-      'India\'s urban water networks lose 40-60% of treated water to leaks, theft, and unmetered consumption. Pravayan\'s Urban Water & Leak Detection platform deploys acoustic sensors, pressure loggers, and flow meters across distribution networks, feeding real-time data into hydraulic digital twins that model the entire system. Our AI algorithms detect leaks as small as 0.5 litres per minute, pinpoint their location within metres, and prioritise repairs by projected water savings and infrastructure risk.',
+      'India\'s urban water networks lose 40-60% of treated water to leaks, theft, and unmetered consumption. Sangam\'s Urban Water & Leak Detection platform deploys acoustic sensors, pressure loggers, and flow meters across distribution networks, feeding real-time data into hydraulic digital twins that model the entire system. Our AI algorithms detect leaks as small as 0.5 litres per minute, pinpoint their location within metres, and prioritise repairs by projected water savings and infrastructure risk.',
     features: [
       'Acoustic leak detection sensors with AI classification',
       'Pressure and flow monitoring at district metered areas',
@@ -351,7 +351,7 @@ export const services: Service[] = [
     imgUrl: '/climate_planning.png',
     heroTagline: 'Prepare today for tomorrow\'s climate.',
     fullDescription:
-      'Climate change is redrawing India\'s water map — intensifying floods, deepening droughts, and disrupting monsoon patterns. Pravayan\'s Climate Resilience Planning service combines downscaled climate projections, hydrological modelling, and vulnerability assessments to help cities, states, and industries build water-secure futures. Our scenario planning tools let decision-makers explore "what-if" pathways under RCP 4.5 and RCP 8.5 scenarios, evaluate adaptation strategies, and prioritise investments with confidence.',
+      'Climate change is redrawing India\'s water map — intensifying floods, deepening droughts, and disrupting monsoon patterns. Sangam\'s Climate Resilience Planning service combines downscaled climate projections, hydrological modelling, and vulnerability assessments to help cities, states, and industries build water-secure futures. Our scenario planning tools let decision-makers explore "what-if" pathways under RCP 4.5 and RCP 8.5 scenarios, evaluate adaptation strategies, and prioritise investments with confidence.',
     features: [
       'Downscaled climate projections (CMIP6 models)',
       'Hydrological impact modelling under future scenarios',
@@ -389,7 +389,7 @@ export const services: Service[] = [
     imgUrl: '/compliance_img.png',
     heroTagline: 'Compliance without complexity.',
     fullDescription:
-      'Environmental regulations are growing more stringent — and so are the penalties for non-compliance. Pravayan\'s Environmental Compliance platform automates the entire compliance lifecycle: from continuous monitoring and threshold tracking to report generation and submission. Our system integrates with CPCB OCEMS, state pollution control board portals, and internal ERP systems to ensure that every data point is captured, every exceedance is flagged, and every report is audit-ready.',
+      'Environmental regulations are growing more stringent — and so are the penalties for non-compliance. Sangam\'s Environmental Compliance platform automates the entire compliance lifecycle: from continuous monitoring and threshold tracking to report generation and submission. Our system integrates with CPCB OCEMS, state pollution control board portals, and internal ERP systems to ensure that every data point is captured, every exceedance is flagged, and every report is audit-ready.',
     features: [
       'Automated CPCB OCEMS data integration',
       'Real-time threshold monitoring and exceedance alerts',

@@ -98,7 +98,7 @@ const Careers: React.FC = () => {
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <span className="text-[#3DA5C4] font-bold tracking-widest text-sm uppercase mb-4 block">Join Our Mission</span>
           <h1 className="text-5xl md:text-6xl font-extrabold mb-6 leading-tight">
-            Careers at Pravayan
+            Careers at Sangam
           </h1>
           <p className="text-xl text-slate-300 leading-relaxed max-w-2xl mx-auto mb-10">
             Help us build the next generation of environmental intelligence. We're looking for passionate individuals to join our team.

@@ -119,7 +119,7 @@ const ProductsPage: React.FC = () => {
           <div className="products-cta__content">
             <h2 className="products-cta__title">Ready to transform your environmental operations?</h2>
             <p className="products-cta__subtitle">
-              Get in touch with our team to discuss how Pravayan's technology can address your specific challenges.
+              Get in touch with our team to discuss how Sangam's technology can address your specific challenges.
             </p>
             <a href="#contact" className="products-cta__btn">
               Contact Us <ArrowUpRight size={16} />

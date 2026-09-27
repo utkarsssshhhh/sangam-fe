@@ -34,7 +34,7 @@ interface FeedbackQuery {
 const AdminPortal: React.FC = () => {
   // Authentication states
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
-    return localStorage.getItem('pravayan_admin_logged_in') === 'true';
+    return localStorage.getItem('sangam_admin_logged_in') === 'true';
   });
   const [emailInput, setEmailInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
@@ -69,7 +69,7 @@ const AdminPortal: React.FC = () => {
     setIsSyncing(true);
     try {
       // 1. Try to fetch from real backend first
-      const API_URL = 'https://pravayan-be-v3.onrender.com';
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
       const response = await fetch(`${API_URL}/api/v1/feedback`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
@@ -87,7 +87,7 @@ const AdminPortal: React.FC = () => {
             status: item.status === 'Resolved' || item.resolved ? 'Resolved' : 'Pending',
           }));
           setQueries(parsedQueries);
-          localStorage.setItem('pravayan_queries', JSON.stringify(parsedQueries));
+          localStorage.setItem('sangam_queries', JSON.stringify(parsedQueries));
           setSyncMode('live');
           triggerToast('Synced feedback list with live backend server.');
           setIsSyncing(false);
@@ -99,7 +99,7 @@ const AdminPortal: React.FC = () => {
     }
 
     // 2. Fallback to localStorage or empty array
-    const local = localStorage.getItem('pravayan_queries');
+    const local = localStorage.getItem('sangam_queries');
     if (local) {
       setQueries(JSON.parse(local));
     } else {
@@ -124,7 +124,7 @@ const AdminPortal: React.FC = () => {
     try {
       const uTrim = emailInput.trim();
       const pTrim = passwordInput;
-      const API_URL = 'https://pravayan-be-v3.onrender.com';
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
       console.log("Resolved API_URL:", API_URL);
       const response = await fetch(`${API_URL}/api/v1/admin/login`, {
         method: 'POST',
@@ -134,7 +134,7 @@ const AdminPortal: React.FC = () => {
 
       if (response.ok) {
         setIsLoggedIn(true);
-        localStorage.setItem('pravayan_admin_logged_in', 'true');
+        localStorage.setItem('sangam_admin_logged_in', 'true');
         setEmailInput('');
         setPasswordInput('');
         triggerToast('Welcome back, Admin.');
@@ -152,7 +152,7 @@ const AdminPortal: React.FC = () => {
   // Log user out
   const handleLogout = () => {
     setIsLoggedIn(false);
-    localStorage.removeItem('pravayan_admin_logged_in');
+    localStorage.removeItem('sangam_admin_logged_in');
     triggerToast('Logged out successfully.');
   };
 
@@ -170,12 +170,12 @@ const AdminPortal: React.FC = () => {
       return q;
     });
     setQueries(updated);
-    if (syncMode === 'local') localStorage.setItem('pravayan_queries', JSON.stringify(updated));
+    if (syncMode === 'local') localStorage.setItem('sangam_queries', JSON.stringify(updated));
 
     // Backend update if live
     if (syncMode === 'live') {
       try {
-        const API_URL = 'https://pravayan-be-v3.onrender.com';
+        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
         await fetch(`${API_URL}/api/v1/feedback/${id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
@@ -193,11 +193,11 @@ const AdminPortal: React.FC = () => {
   const executeDeleteQuery = async (id: string | number) => {
     const updated = queries.filter(q => q.id !== id);
     setQueries(updated);
-    if (syncMode === 'local') localStorage.setItem('pravayan_queries', JSON.stringify(updated));
+    if (syncMode === 'local') localStorage.setItem('sangam_queries', JSON.stringify(updated));
 
     if (syncMode === 'live') {
       try {
-        const API_URL = 'https://pravayan-be-v3.onrender.com';
+        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
         await fetch(`${API_URL}/api/v1/feedback/${id}`, {
           method: 'DELETE'
         });
@@ -234,7 +234,7 @@ const AdminPortal: React.FC = () => {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.setAttribute('href', url);
-    link.setAttribute('download', `pravayan_feedback_export_${new Date().toISOString().slice(0, 10)}.csv`);
+    link.setAttribute('download', `sangam_feedback_export_${new Date().toISOString().slice(0, 10)}.csv`);
     link.style.visibility = 'hidden';
     document.body.appendChild(link);
     link.click();
@@ -360,7 +360,7 @@ const AdminPortal: React.FC = () => {
             <div className="text-center mb-8">
               <img
                 src="/LOGO.png"
-                alt="Pravayan Logo"
+                alt="Sangam Logo"
                 className="w-auto h-20 mx-auto object-contain drop-shadow-md mb-6 hover:scale-105 transition-transform duration-300"
               />
               <h1 className="text-2xl font-heading font-extrabold text-white tracking-tight">
@@ -456,7 +456,7 @@ const AdminPortal: React.FC = () => {
                 <div className="h-6 w-px bg-slate-200" />
                 <div>
                   <h2 className="text-lg font-heading font-extrabold text-[#0B3C5D] leading-none">
-                    Pravayan Admin
+                    Sangam Admin
                   </h2>
                   <span className="text-[10px] font-bold uppercase tracking-widest text-[#3DA5C4] leading-none mt-1 inline-block">
                     Environmental Control
@@ -727,7 +727,7 @@ const AdminPortal: React.FC = () => {
 
                                     {/* Reply (mailto) Link */}
                                     <a
-                                      href={`mailto:${item.email}?subject=Re: Pravayan Inquiry&body=Dear%20Sender,%20%0A%0AThank%20you%20for%20reaching%20out%20to%20Pravayan.%20In%20regards%20to%20your%20query:%20%0A"${encodeURIComponent(item.query)}"%20%0A%0A`}
+                                      href={`mailto:${item.email}?subject=Re: Sangam Inquiry&body=Dear%20Sender,%20%0A%0AThank%20you%20for%20reaching%20out%20to%20Sangam.%20In%20regards%20to%20your%20query:%20%0A"${encodeURIComponent(item.query)}"%20%0A%0A`}
                                       title="Draft response in email app"
                                       className="p-2 text-slate-500 hover:text-white hover:bg-slate-800 rounded-lg transition-colors border border-slate-200"
                                     >

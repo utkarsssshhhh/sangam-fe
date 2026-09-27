@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, ArrowUpRight, ExternalLink } from 'lucide-react';
+import { ArrowUpRight, ExternalLink } from 'lucide-react';
 
 const FooterHome: React.FC = () => {
   const year = new Date().getFullYear();
@@ -36,11 +36,11 @@ const FooterHome: React.FC = () => {
           <div className="footer-home__brand">
             <div className="footer-home__logo">
               <Link to="/">
-                <img src="/LogoHead.jpeg" alt="Pravayan Logo" className="h-10 w-auto object-contain rounded-md" />
+                <img src="/LogoHead.jpeg" alt="Sangam Logo" className="h-10 w-auto object-contain rounded-md" />
               </Link>
             </div>
             <p className="footer-home__brand-desc">
-              Sensing the pulse of the planet. Pravayan pioneers environmental intelligence through precision IoT sensor networks — empowering communities with real-time data for a sustainable future.
+              Sensing the pulse of the planet. Sangam pioneers environmental intelligence through precision IoT sensor networks — empowering communities with real-time data for a sustainable future.
             </p>
             <div className="footer-home__socials flex gap-3 text-sm">
               <a href="https://www.linkedin.com/company/pravayan-private-limited/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">LinkedIn</a>
@@ -85,17 +85,6 @@ const FooterHome: React.FC = () => {
           {/* Contact */}
           <div className="footer-home__col" id="contact">
             <h4 className="footer-home__col-title">Get in Touch</h4>
-            <div className="footer-home__contact-list">
-              <a href="mailto:pravayanpvtltd@gmail.com" className="footer-home__contact-item">
-                <Mail size={15} />
-                <span>pravayanpvtltd@gmail.com</span>
-              </a>
-              <a href="tel:+919956080370" className="footer-home__contact-item">
-                <Phone size={15} />
-                <span>+91 9956080370</span>
-              </a>
-            </div>
-
             <button 
               onClick={(e) => {
                 e.preventDefault();
@@ -110,7 +99,7 @@ const FooterHome: React.FC = () => {
 
         {/* Bottom Bar */}
         <div className="footer-home__bottom">
-          <p>© {year} Pravayan Pvt Ltd. All rights reserved.</p>
+          <p>© {year} Sangam Pvt Ltd. All rights reserved.</p>
           <div className="footer-home__bottom-links">
             {['Privacy Policy', 'Terms of Service', 'Cookie Policy'].map((l) => (
               <a key={l} href="#" className="footer-home__bottom-link">{l}</a>

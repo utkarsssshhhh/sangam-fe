@@ -159,7 +159,7 @@ const AboutUs: React.FC = () => {
             <Users size={14} /> Leadership
           </span>
           <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Meet the Team</h2>
-          <p className="text-slate-500 max-w-2xl mx-auto font-medium text-lg">The scientists, engineers, and visionaries building Pravayan.</p>
+          <p className="text-slate-500 max-w-2xl mx-auto font-medium text-lg">The scientists, engineers, and visionaries building Sangam.</p>
         </div>
 
         <div className="flex flex-col gap-12">

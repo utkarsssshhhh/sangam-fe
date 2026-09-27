@@ -3,11 +3,11 @@ import { MessageCircle, X, Send, Bot, User, Mail, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const BOT_RESPONSES: Record<string, string> = {
-  default: "Hello! I'm Pravayan's virtual assistant. I can help you with information about our environmental monitoring solutions, research areas, or how to get in touch. What would you like to know?",
-  water: "Pravayan monitors 40+ water quality parameters including pH, dissolved oxygen, BOD/COD, turbidity, heavy metals, and microplastics. Our sensor networks span 12 major Indian rivers with 99.9% uptime. Would you like to know more?",
+  default: "Hello! I'm Sangam's virtual assistant. I can help you with information about our environmental monitoring solutions, research areas, or how to get in touch. What would you like to know?",
+  water: "Sangam monitors 40+ water quality parameters including pH, dissolved oxygen, BOD/COD, turbidity, heavy metals, and microplastics. Our sensor networks span 12 major Indian rivers with 99.9% uptime. Would you like to know more?",
   air: "Our air quality monitoring covers PM2.5, PM10, NOx, SO2, Ozone, and VOC concentrations. We provide hyper-local pollution mapping for smart cities and industrial zones. Ask me more!",
-  contact: "You can reach us at hello@pravayan.com or call +91 12345 67890. Our team is at IIT Varanasi Campus. We respond within 24 hours. Shall I help you with anything else?",
-  research: "Pravayan's research spans 5 domains: Water Quality, Air Monitoring, Soil Health, Hydrology, and Climate & Micrometeorology. Which area interests you most?",
+  contact: "You can reach us at hello@sangam.com or call +91 12345 67890. Our team is at IIT Varanasi Campus. We respond within 24 hours. Shall I help you with anything else?",
+  research: "Sangam's research spans 5 domains: Water Quality, Air Monitoring, Soil Health, Hydrology, and Climate & Micrometeorology. Which area interests you most?",
   soil: "Our soil sensing technology measures NPK levels, moisture, salinity, pH, and microbial activity in real time — helping farmers optimize inputs and improve crop sustainability.",
   services: "We offer IoT sensor deployment, real-time data dashboards, environmental consulting, and custom sensing solutions. Would you like details on any specific service?",
 };
@@ -57,7 +57,7 @@ const ChatBot: React.FC = () => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const API_URL = 'https://pravayan-be-v3.onrender.com';
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
       const res = await fetch(`${API_URL}/api/v1/feedback`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -157,7 +157,7 @@ const ChatBot: React.FC = () => {
               <span className="chatbot-online-dot" />
             </div>
             <div>
-              <strong>Pravayan Assistant</strong>
+              <strong>Sangam Assistant</strong>
               <span>Online · Ask me anything</span>
             </div>
           </div>

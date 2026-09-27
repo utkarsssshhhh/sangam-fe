@@ -88,14 +88,14 @@ const Navbar = () => {
         className="fixed top-0 left-0 right-0 z-40 bg-white/70 backdrop-blur-[24px] saturate-[1.5] border-b border-black/5 shadow-[0_4px_30px_rgba(0,0,0,0.03)] transition-all duration-500"
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="flex items-center justify-between h-24 md:h-28">
+          <div className="flex items-center justify-between h-20 md:h-24">
 
-            {/* Logo - Just the image, even larger size, no text */}
-            <Link to="/" className="flex items-center group h-full">
+            {/* Logo */}
+            <Link to="/" className="flex items-center group py-1.5 h-full">
               <img
                 src="/LOGO.png"
                 alt="Logo"
-                className="w-auto h-full max-h-[8rem] object-contain drop-shadow-md scale-100 md:scale-150 origin-left hover:scale-110 md:hover:scale-[1.55] transition-transform duration-500"
+                className="w-auto h-full max-h-16 md:max-h-20 object-contain drop-shadow-md hover:scale-105 transition-transform duration-300"
               />
             </Link>
 

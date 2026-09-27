@@ -54,7 +54,7 @@ const IntroSection: React.FC = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} id="about" className="intro-section relative py-24 bg-[#f8fafc] overflow-hidden" aria-label="About Pravahan">
+    <section ref={sectionRef} id="about" className="intro-section relative py-24 bg-[#f8fafc] overflow-hidden" aria-label="About Sangam">
       {/* Background accents */}
       <div className="intro-blob intro-blob--tl" aria-hidden="true" />
       <div className="intro-blob intro-blob--br" aria-hidden="true" />
@@ -93,10 +93,10 @@ const IntroSection: React.FC = () => {
           <div className="intro-text">
             <span className="text-[#1C7C9C] font-bold tracking-widest text-sm uppercase mb-4 block">What We Are</span>
             <h2 className="text-4xl lg:text-5xl font-extrabold text-slate-900 leading-tight mb-6">
-              Pravahan — <br/><span className="text-[#1C7C9C]">The Flow of Insight</span>
+              Sangam — <br/><span className="text-[#1C7C9C]">The Flow of Insight</span>
             </h2>
             <p className="text-lg text-slate-600 mb-8 leading-relaxed">
-              Pravahan is an environmental intelligence company. We help cities, utilities, government bodies, and industry understand and manage their water and environmental systems — by combining satellite remote sensing, IoT sensor networks, GIS, and digital twin modelling into clear, decision-ready insight.
+              Sangam is an environmental intelligence company. We help cities, utilities, government bodies, and industry understand and manage their water and environmental systems — by combining satellite remote sensing, IoT sensor networks, GIS, and digital twin modelling into clear, decision-ready insight.
             </p>
 
             {/* Vision Box */}

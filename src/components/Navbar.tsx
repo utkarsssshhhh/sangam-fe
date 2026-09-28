@@ -109,6 +109,13 @@ const Navbar = () => {
                 Home
               </Link>
               <Link
+                to="/analytics"
+                className={`text-[15px] font-bold transition-colors duration-300 ${location.pathname === '/analytics' ? 'text-[#3DA5C4]' : 'text-slate-700 hover:text-[#3DA5C4]'
+                  }`}
+              >
+                Analytics
+              </Link>
+              <Link
                 to="/products"
                 className={`text-[15px] font-bold transition-colors duration-300 ${location.pathname === '/products' ? 'text-[#3DA5C4]' : 'text-slate-700 hover:text-[#3DA5C4]'
                   }`}
@@ -163,6 +170,13 @@ const Navbar = () => {
                     className="text-base font-bold text-slate-800 hover:text-[#3DA5C4] transition-colors px-4 py-2 rounded-xl hover:bg-white/50"
                   >
                     Home
+                  </Link>
+                  <Link
+                    to="/analytics"
+                    onClick={() => setIsMobileOpen(false)}
+                    className="text-base font-bold text-slate-800 hover:text-[#3DA5C4] transition-colors px-4 py-2 rounded-xl hover:bg-white/50"
+                  >
+                    Analytics
                   </Link>
                   <Link
                     to="/products"

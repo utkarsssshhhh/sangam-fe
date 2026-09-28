@@ -6,6 +6,7 @@ import ServiceDetailPage from './pages/ServiceDetailPage';
 import ProductsPage from './pages/ProductsPage';
 import AboutUs from './pages/AboutUs';
 import Treatment from './pages/Treatment';
+import Analytics from './pages/Analytics';
 
 import Navbar from './components/Navbar';
 import ChatBot from './components/ChatBot';
@@ -36,6 +37,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/analytics" element={<Analytics />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/services/:slug" element={<ServiceDetailPage />} />

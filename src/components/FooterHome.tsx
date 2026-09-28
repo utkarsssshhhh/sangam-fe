@@ -8,8 +8,7 @@ const FooterHome: React.FC = () => {
   const quickLinks = [
     { label: 'Home', path: '/' },
     { label: 'About Us', path: '/about' },
-    { label: 'Products', path: '/products' },
-    { label: 'Treatments', path: '/treatment' }
+    { label: 'Products', path: '/products' }
   ];
   const researchLinks = [
     { label: 'Water Quality', id: 'water' },

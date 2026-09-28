@@ -1,27 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, Bot, User, Mail, Loader2 } from 'lucide-react';
+import { MessageCircle, X, Send, Bot, User, Mail, Loader2, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
-const BOT_RESPONSES: Record<string, string> = {
-  default: "Hello! I'm Sangam's virtual assistant. I can help you with information about our environmental monitoring solutions, research areas, or how to get in touch. What would you like to know?",
-  water: "Sangam monitors 40+ water quality parameters including pH, dissolved oxygen, BOD/COD, turbidity, heavy metals, and microplastics. Our sensor networks span 12 major Indian rivers with 99.9% uptime. Would you like to know more?",
-  air: "Our air quality monitoring covers PM2.5, PM10, NOx, SO2, Ozone, and VOC concentrations. We provide hyper-local pollution mapping for smart cities and industrial zones. Ask me more!",
-  contact: "You can reach us at hello@sangam.com or call +91 12345 67890. Our team is at IIT Varanasi Campus. We respond within 24 hours. Shall I help you with anything else?",
-  research: "Sangam's research spans 5 domains: Water Quality, Air Monitoring, Soil Health, Hydrology, and Climate & Micrometeorology. Which area interests you most?",
-  soil: "Our soil sensing technology measures NPK levels, moisture, salinity, pH, and microbial activity in real time — helping farmers optimize inputs and improve crop sustainability.",
-  services: "We offer IoT sensor deployment, real-time data dashboards, environmental consulting, and custom sensing solutions. Would you like details on any specific service?",
-};
-
-function getBotReply(message: string): string {
-  const lower = message.toLowerCase();
-  if (lower.includes('water') || lower.includes('river') || lower.includes('lake')) return BOT_RESPONSES.water;
-  if (lower.includes('air') || lower.includes('pm') || lower.includes('pollution')) return BOT_RESPONSES.air;
-  if (lower.includes('contact') || lower.includes('email') || lower.includes('phone') || lower.includes('reach')) return BOT_RESPONSES.contact;
-  if (lower.includes('research') || lower.includes('study')) return BOT_RESPONSES.research;
-  if (lower.includes('soil') || lower.includes('farm') || lower.includes('agri')) return BOT_RESPONSES.soil;
-  if (lower.includes('service') || lower.includes('solution') || lower.includes('product')) return BOT_RESPONSES.services;
-  return BOT_RESPONSES.default;
-}
+const DEFAULT_MESSAGE = "Hello! I'm Coth. I can help you with information about our environmental monitoring solutions, research areas, or how to get in touch. What would you like to know?";
 
 interface ChatMessage {
   id: number;
@@ -38,9 +21,10 @@ const ChatBot: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([
-    { id: 1, from: 'bot', text: BOT_RESPONSES.default, time: new Date() },
+    { id: 1, from: 'bot', text: DEFAULT_MESSAGE, time: new Date() },
   ]);
   const [input, setInput] = useState<string>('');
+  const [language, setLanguage] = useState<string>('English');
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const endRef = useRef<HTMLDivElement>(null);
 
@@ -78,25 +62,77 @@ const ChatBot: React.FC = () => {
     }
   };
 
-  const send = () => {
+  const send = async () => {
     const trimmed = input.trim();
     if (!trimmed) return;
 
     const userMsg: ChatMessage = { id: Date.now(), from: 'user', text: trimmed, time: new Date() };
-    setMessages((prev) => [...prev, userMsg]);
+    const newMessages = [...messages, userMsg];
+    setMessages(newMessages);
     setInput('');
     setIsTyping(true);
 
-    setTimeout(() => {
-      const botMsg: ChatMessage = {
+    try {
+      // Build conversation history for the backend
+      const backendMessages = [
+        { role: 'system', content: `You are Coth, a helpful virtual assistant for Sangam, an environmental intelligence company. Keep your answers concise and friendly. You have knowledge of water quality, air monitoring, soil sensing, and climate data. IMPORTANT: ALWAYS respond in ${language}.` },
+        ...newMessages.slice(1).map(msg => ({
+          role: msg.from === 'bot' ? 'bot' : 'user',
+          content: msg.text
+        }))
+      ];
+
+      const res = await fetch('http://localhost:8000/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: backendMessages })
+      });
+
+      if (!res.ok) {
+        let errorDetail = res.statusText;
+        try {
+          const errorData = await res.json();
+          errorDetail = errorData.detail || errorDetail;
+        } catch (e) {}
+        throw new Error(errorDetail);
+      }
+
+      if (!res.body) throw new Error("No response body from server");
+
+      const botMsgId = Date.now() + 1;
+      setMessages((prev) => [...prev, {
+        id: botMsgId,
+        from: 'bot',
+        text: '',
+        time: new Date(),
+      }]);
+      setIsTyping(false); // Stop typing indicator since we're starting to stream
+
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder("utf-8");
+
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        
+        const chunk = decoder.decode(value, { stream: true });
+        setMessages((prev) => prev.map(msg => 
+          msg.id === botMsgId ? { ...msg, text: msg.text + chunk } : msg
+        ));
+      }
+
+    } catch (error: any) {
+      console.error(error);
+      const errorMsg: ChatMessage = {
         id: Date.now() + 1,
         from: 'bot',
-        text: getBotReply(trimmed),
+        text: `Error connecting to backend: ${error.message || error}`,
         time: new Date(),
       };
-      setMessages((prev) => [...prev, botMsg]);
+      setMessages((prev) => [...prev, errorMsg]);
+    } finally {
       setIsTyping(false);
-    }, 1200);
+    }
   };
 
   const handleKey = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -152,18 +188,33 @@ const ChatBot: React.FC = () => {
         {/* Header */}
         <div className="chatbot-header">
           <div className="chatbot-header__left">
-            <div className="chatbot-avatar">
-              <Bot size={18} />
+            <div className="chatbot-avatar overflow-hidden p-0 border border-white/20 rounded-full flex-shrink-0 aspect-square relative">
+              <img src="/download.jpg" alt="Coth" className="w-full h-full object-cover object-top" />
               <span className="chatbot-online-dot" />
             </div>
             <div>
-              <strong>Sangam Assistant</strong>
+              <strong>Coth</strong>
               <span>Online · Ask me anything</span>
             </div>
           </div>
-          <button onClick={() => setIsOpen(false)} className="chatbot-close" aria-label="Close chat">
-            <X size={18} />
-          </button>
+          <div className="flex items-center gap-2">
+            <div className="relative flex items-center bg-white/10 rounded-md px-2 py-1 text-xs text-white" title="Change Language">
+              <Globe size={14} className="mr-1 opacity-70" />
+              <select 
+                value={language}
+                onChange={(e) => setLanguage(e.target.value)}
+                className="bg-transparent outline-none appearance-none cursor-pointer font-medium"
+              >
+                <option value="English" className="text-black">English</option>
+                <option value="Hindi" className="text-black">हिंदी (Hindi)</option>
+                <option value="Tamil" className="text-black">தமிழ் (Tamil)</option>
+                <option value="Japanese" className="text-black">日本語 (Japanese)</option>
+              </select>
+            </div>
+            <button onClick={() => setIsOpen(false)} className="chatbot-close ml-1" aria-label="Close chat">
+              <X size={18} />
+            </button>
+          </div>
         </div>
 
         {/* Messages */}
@@ -171,12 +222,28 @@ const ChatBot: React.FC = () => {
           {messages.map((msg) => (
             <div key={msg.id} className={`chatbot-msg chatbot-msg--${msg.from}`}>
               {msg.from === 'bot' && (
-                <div className="chatbot-msg__avatar">
-                  <Bot size={14} />
+                <div className="chatbot-msg__avatar overflow-hidden p-0 border border-slate-200 rounded-full flex-shrink-0 aspect-square">
+                  <img src="/download.jpg" alt="Coth" className="w-full h-full object-cover object-top" />
                 </div>
               )}
-              <div className="chatbot-msg__bubble">
-                <p>{msg.text}</p>
+              <div className="chatbot-msg__bubble text-sm" style={{ wordBreak: 'break-word' }}>
+                {msg.from === 'bot' ? (
+                  <ReactMarkdown 
+                    remarkPlugins={[remarkGfm]}
+                    components={{
+                      p: ({node, ...props}) => <p className="mb-2 last:mb-0" {...props} />,
+                      ul: ({node, ...props}) => <ul className="list-disc pl-5 mb-2 space-y-1" {...props} />,
+                      ol: ({node, ...props}) => <ol className="list-decimal pl-5 mb-2 space-y-1" {...props} />,
+                      li: ({node, ...props}) => <li className="" {...props} />,
+                      a: ({node, ...props}) => <a className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer" {...props} />,
+                      strong: ({node, ...props}) => <strong className="font-bold text-inherit" {...props} />
+                    }}
+                  >
+                    {msg.text}
+                  </ReactMarkdown>
+                ) : (
+                  <p>{msg.text}</p>
+                )}
                 <time>{fmt(msg.time)}</time>
               </div>
               {msg.from === 'user' && (
@@ -189,8 +256,8 @@ const ChatBot: React.FC = () => {
 
           {isTyping && (
             <div className="chatbot-msg chatbot-msg--bot">
-              <div className="chatbot-msg__avatar">
-                <Bot size={14} />
+              <div className="chatbot-msg__avatar overflow-hidden p-0 border border-slate-200 rounded-full flex-shrink-0 aspect-square">
+                <img src="/download.jpg" alt="Coth" className="w-full h-full object-cover object-top" />
               </div>
               <div className="chatbot-msg__bubble chatbot-msg__bubble--typing">
                 <span /><span /><span />

@@ -123,13 +123,6 @@ const Navbar = () => {
                 Products
               </Link>
               <Link
-                to="/treatment"
-                className={`text-[15px] font-bold transition-colors duration-300 ${location.pathname === '/treatment' ? 'text-[#3DA5C4]' : 'text-slate-700 hover:text-[#3DA5C4]'
-                  }`}
-              >
-                Treatments
-              </Link>
-              <Link
                 to="/about"
                 className={`text-[15px] font-bold transition-colors duration-300 ${location.pathname === '/about' ? 'text-[#3DA5C4]' : 'text-slate-700 hover:text-[#3DA5C4]'
                   }`}
@@ -184,13 +177,6 @@ const Navbar = () => {
                     className="text-base font-bold text-slate-800 hover:text-[#3DA5C4] transition-colors px-4 py-2 rounded-xl hover:bg-white/50"
                   >
                     Products
-                  </Link>
-                  <Link
-                    to="/treatment"
-                    onClick={() => setIsMobileOpen(false)}
-                    className="text-base font-bold text-slate-800 hover:text-[#3DA5C4] transition-colors px-4 py-2 rounded-xl hover:bg-white/50"
-                  >
-                    Treatments
                   </Link>
                   <Link
                     to="/about"

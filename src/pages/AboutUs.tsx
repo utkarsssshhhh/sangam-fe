@@ -1,43 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Target, Lightbulb, Compass, Shield, Zap, Globe, Users } from 'lucide-react';
+import { Target, Lightbulb, Compass, Shield, Zap, Globe } from 'lucide-react';
 import FooterHome from '../components/FooterHome';
 
-const members = [
-  {
-    name: 'Mrs. Swati Gupta',
-    role: 'Director & Majority Promoter',
-    location: 'Lucknow, Uttar Pradesh',
-    image: '/SWATI.jpg',
-    points: [
-      'B.Tech in Computer Science & Engineering',
-      'Expertise in AI/ML systems, cloud platform design & digital twin integration',
-      'Leads product development, technology strategy & day-to-day business operations'
-    ]
-  },
-  {
-    name: 'Dr. Pawan Labhasetwar',
-    role: 'Director & Strategic Advisor',
-    location: 'Nagpur, Maharashtra',
-    image: '/Pawan_Labhasetwar_Photo.jpeg',
-    points: [
-      'Professor of Practice, IIT Madras; formerly Chief Scientist, CSIR-NEERI, Nagpur',
-      '30+ years in water treatment technologies, environmental policy & sustainability',
-      'Provides strategic direction on water science & facilitates govt./industry partnerships'
-    ]
-  },
-  {
-    name: 'Mr. Yaswanth Aragonda',
-    role: 'Director — Geospatial & Operations',
-    location: 'Tirupathi, Andhra Pradesh',
-    image: '/yaswanth_aragonda.jpeg',
-    points: [
-      'B.Tech Civil Engg; M.Tech in Remote Sensing & GIS; PhD (pursuing), IIT Roorkee',
-      'Specialises in geospatial analytics, satellite data processing & hydrological modelling',
-      'Leads technical team in system integration, computational modelling & field deployment'
-    ]
-  }
-];
+
 
 const statements = [
   {
@@ -152,59 +118,7 @@ const AboutUs: React.FC = () => {
         </div>
       </section>
 
-      {/* ===== TEAM MEMBERS ===== */}
-      <section className="py-32 px-6 md:px-12 max-w-7xl mx-auto">
-        <div className="text-center mb-16 md:mb-24">
-          <span className="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-slate-100 text-slate-600 font-bold text-xs uppercase tracking-widest mb-6">
-            <Users size={14} /> Leadership
-          </span>
-          <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Meet the Team</h2>
-          <p className="text-slate-500 max-w-2xl mx-auto font-medium text-lg">The scientists, engineers, and visionaries building Sangam.</p>
-        </div>
 
-        <div className="flex flex-col gap-12">
-          {members.map((member, idx) => (
-            <div key={idx} className="bg-white rounded-[2rem] p-8 md:p-10 border border-slate-100 shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col md:flex-row gap-8 lg:gap-12 items-start md:items-center">
-              
-              {/* Image Container */}
-              <div className="w-full md:w-1/3 shrink-0">
-                <div className="aspect-[3/4] md:aspect-square lg:aspect-[4/5] rounded-[1.5rem] overflow-hidden bg-slate-50 relative border border-slate-100 shadow-inner">
-                  <img 
-                    src={member.image} 
-                    alt={member.name} 
-                    className="w-full h-full object-cover object-center"
-                    loading="lazy"
-                  />
-                </div>
-              </div>
-              
-              {/* Text Info */}
-              <div className="w-full md:w-2/3 flex flex-col justify-center">
-                <div className="flex flex-wrap items-center gap-3 mb-2">
-                  <h3 className="text-3xl font-extrabold text-slate-900">{member.name}</h3>
-                </div>
-                
-                <p className="text-lg font-bold text-[#3DA5C4] mb-6">{member.role}</p>
-                
-                <ul className="space-y-4 mb-8">
-                  {member.points.map((point, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <div className="mt-1.5 shrink-0 w-1.5 h-1.5 rounded-full bg-slate-300" />
-                      <span className="text-slate-600 font-medium leading-relaxed text-[15px]">{point}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="flex items-center gap-2 text-slate-500 text-sm font-semibold pt-4 border-t border-slate-100">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                  {member.location}
-                </div>
-              </div>
-
-            </div>
-          ))}
-        </div>
-      </section>
 
       <FooterHome />
     </div>

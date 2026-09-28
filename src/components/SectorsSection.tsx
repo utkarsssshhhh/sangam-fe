@@ -80,7 +80,7 @@ const SectorsSection: React.FC = () => {
         {/* Section Header */}
         <div className="text-center mb-16">
           <span className="text-[13px] font-bold uppercase tracking-widest text-[#3DA5C4] bg-[#3DA5C4]/10 px-4 py-1.5 rounded-full border border-[#3DA5C4]/20">Client Sectors</span>
-          <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mt-6 mb-6">Who We Serve</h2>
+          <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mt-6 mb-6">We Can Serve</h2>
           <p className="text-slate-600 max-w-2xl mx-auto text-lg leading-relaxed">
             Providing environmental intelligence and data products across public and private sectors.
           </p>

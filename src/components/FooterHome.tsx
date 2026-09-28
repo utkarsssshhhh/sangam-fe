@@ -9,8 +9,7 @@ const FooterHome: React.FC = () => {
     { label: 'Home', path: '/' },
     { label: 'About Us', path: '/about' },
     { label: 'Products', path: '/products' },
-    { label: 'Treatments', path: '/treatment' },
-    { label: 'Careers', path: '/careers' }
+    { label: 'Treatments', path: '/treatment' }
   ];
   const researchLinks = [
     { label: 'Water Quality', id: 'water' },
@@ -43,7 +42,7 @@ const FooterHome: React.FC = () => {
               Sensing the pulse of the planet. Sangam pioneers environmental intelligence through precision IoT sensor networks — empowering communities with real-time data for a sustainable future.
             </p>
             <div className="footer-home__socials flex gap-3 text-sm">
-              <a href="https://www.linkedin.com/company/pravayan-private-limited/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">LinkedIn</a>
+              <a href="" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">LinkedIn</a>
               <span className="text-slate-300">|</span>
               <a href="#" className="hover:text-primary transition-colors">Twitter</a>
             </div>

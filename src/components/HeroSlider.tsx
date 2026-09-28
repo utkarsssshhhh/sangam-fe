@@ -55,15 +55,6 @@ const slides: Slide[] = [
     imgUrl: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1920&auto=format&fit=crop',
   },
   {
-    id: 4,
-    title: 'Smart Waste Management',
-    description: 'Mapping, measuring, and managing solid waste, including tourist hotspots.',
-    icon: Trash2,
-    badge: 'Waste Management',
-    bgColor: 'from-[#1a2a6c] via-[#5A9E6F] to-[#1a2a6c]',
-    imgUrl: 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?q=80&w=1920&auto=format&fit=crop',
-  },
-  {
     id: 5,
     title: 'Spectral Intelligence',
     description: 'Seeing what the eye can\'t — in multispectral and hyperspectral data.',
@@ -116,16 +107,6 @@ const slides: Slide[] = [
     badge: 'Compliance',
     bgColor: 'from-[#0B3C5D] via-[#1C7C9C] to-[#0B3C5D]',
     imgUrl: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1920&auto=format&fit=crop',
-  },
-
-  {
-    id: 12,
-    title: 'Treatment Solutions',
-    description: 'Compact STP, ETP, RO, and tank systems that treat water on site.',
-    icon: Filter,
-    badge: 'Decentralized Treatment',
-    bgColor: 'from-[#1a2a6c] via-[#1C7C9C] to-[#1a2a6c]',
-    imgUrl: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1920&auto=format&fit=crop',
   },
 ];
 
